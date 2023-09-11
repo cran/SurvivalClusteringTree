@@ -1,0 +1,20 @@
+num_to_str_g<-function(x,digits=4)sprintf(paste0("%.",digits,"g"),x)
+num_to_str_f<-function(x,digits=2)sprintf(paste0("%.",digits,"f"),x)
+num_to_pvalue<-function(x,digits=3){
+  dplyr::case_when(
+    x<0.00001~"p<0.00001",
+    x<0.0001~"p<0.0001",
+    x<0.001~"p<0.001",
+    TRUE~paste0("p=",sprintf(paste0("%.",digits,"f"),x)))
+}
+create_dictionary<-function(x,na.rm=T){
+  x<-sort(na.omit(unique(x)))
+  structure(1:length(x),names=x)
+}
+dostep<-function(x,y){
+  n<-length(x)
+  xrep<-rep(x,c(1,rep(2,n-1)))
+  yrep<-rep(y,c(rep(2,n-1),1))
+  result<-list(x=xrep,y=yrep)
+  return(result)
+}
